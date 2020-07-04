@@ -1,20 +1,19 @@
 {
   "name": "curseforge-downloader",
   "version": "1.0.0",
-  "description": "",
+  "description": "Minecraft Mod manager",
   "bin": {
     "cfd": "index.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "JoonKui Liew <ahkui@outlok.com>",
   "license": "ISC",
   "dependencies": {
     "@supercharge/promise-pool": "^1.2.0",
     "cli-progress": "^3.8.2",
     "colors": "^1.4.0",
-    "js-file-downloader": "^1.1.8",
     "mc-curseforge-api": "^2.1.0",
     "request": "^2.88.2",
     "yargs": "^15.4.0"

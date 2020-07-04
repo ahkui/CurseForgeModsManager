@@ -13,29 +13,48 @@ exports.desc = 'Sync with server mod';
 
 exports.builder = function (yargs) {
     return yargs
+        .option('server', {
+            alias: 's',
+            type: 'string',
+            description: 'Mod list URL'
+        })
+        .example('cfd sync')
+        .example('cfd sync --server https://example.com/cfd_mod_config.json', 'Specify modlist')
         .help('h');
 }
+
 
 const fetchServerConfig = async (argv) => {
     const config = readModConfig()
 
     const serverUrl = argv.server || config.server
+    if (serverUrl == undefined || serverUrl == null)
+        throw "server can't be empty!"
     console.log(`Server: ${serverUrl}`)
 
     config.server = serverUrl
 
     writeModConfig(config)
 
-    return await (new Promise(resolve => {
+    return await (new Promise((resolve, reject) => {
         request({ url: serverUrl }, function (error, response, body) {
-            resolve(JSON.parse(body));
+            try {
+                resolve(JSON.parse(body));
+            } catch (error) {
+                reject("Fail to fetch from server...");
+            }
         })
     }))
 };
 
 exports.handler = async function (argv) {
-
-    const serverModConfig = await fetchServerConfig(argv);
+    let serverModConfig
+    try {
+        serverModConfig = await fetchServerConfig(argv);
+    } catch (error) {
+        console.error(error)
+        return
+    }
     const serverModList = serverModConfig.modList;
 
     const localModList = await readModList();

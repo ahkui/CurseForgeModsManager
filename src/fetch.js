@@ -54,7 +54,7 @@ exports.handler = async function (argv) {
                     fs.mkdirSync(modPath);
 
                 if (fs.existsSync(path.join(modPath, mod.filename)))
-                    fs.renameSync(path.join(modPath, mod.filename), path.join(modPath, `${mod.filename}.false`));
+                    fs.renameSync(path.join(modPath, mod.filename), path.join(modPath, `${mod.filename}.disabled`));
             }
             progressBar.increment()
             return

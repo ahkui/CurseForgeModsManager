@@ -43,8 +43,8 @@ exports.handler = async function (argv) {
     if (fs.existsSync(modPath) == false)
         fs.mkdirSync(modPath);
 
-    if (fs.existsSync(path.join(modPath, `${selectedMod.filename}.false`)))
-        fs.renameSync(path.join(modPath, `${selectedMod.filename}.false`), path.join(modPath, selectedMod.filename));
+    if (fs.existsSync(path.join(modPath, `${selectedMod.filename}.disabled`)))
+        fs.renameSync(path.join(modPath, `${selectedMod.filename}.disabled`), path.join(modPath, selectedMod.filename));
 
     await writeModList(localModList);
 

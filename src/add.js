@@ -5,6 +5,8 @@ const curseforge = require("mc-curseforge-api");
 const readModList = require('./utils/readModList');
 const writeModList = require('./utils/writeModList');
 const genListItem = require('./utils/genListItem');
+const parsedModList = require('./utils/parsedModList');
+const parsedFileList = require('./utils/parsedFileList');
 
 exports.command = 'add';
 
@@ -15,26 +17,26 @@ exports.builder = function (yargs) {
         .help('h');
 }
 
-const parsedModList = (m) => m.map((mod) => {
-    return {
-        Key: mod.key,
-        Name: mod.name,
-        URL: mod.url,
-    }
-});
+// const parsedModList = (m) => m.map((mod) => {
+//     return {
+//         Key: mod.key,
+//         Name: mod.name,
+//         URL: mod.url || mod.mod_url,
+//     }
+// });
 
-const getFileName = (f) => {
-    const urlArr = f.download_url.split('/');
-    return urlArr[urlArr.length - 1]
-}
+// const getFileName = (f) => {
+//     const urlArr = f.download_url.split('/');
+//     return urlArr[urlArr.length - 1]
+// }
 
-const parsedFileList = (f) => f.map((file) => {
-    return {
-        'MC Version': file.minecraft_versions.join(", "),
-        'Files': getFileName(file),
-        'Upload Date': new Date(file.timestamp),
-    }
-})
+// const parsedFileList = (f) => f.map((file) => {
+//     return {
+//         'MC Version': file.minecraft_versions.join(", "),
+//         'Files': getFileName(file),
+//         'Upload Date': new Date(file.timestamp),
+//     }
+// })
 
 exports.handler = async function (argv) {
     let currentPage = 0;
@@ -56,7 +58,7 @@ exports.handler = async function (argv) {
     // Select Mod
     while (true) {
         selectIndex = ''
-        while (selectIndex == '' || selectIndex < 0 || selectIndex > 9 || selectIndex >= mods.length) {
+        while (selectIndex == '' || selectIndex < 0 || selectIndex > 9 || selectIndex >= mods[currentPage].length) {
             console.clear()
 
             console.table(parsedModList(mods[currentPage]))
@@ -125,13 +127,6 @@ exports.handler = async function (argv) {
         break
     }
     const selectedFile = files[currentPage][selectIndex]
-    console.log(selectedFile)
-
-    console.log(genListItem({
-        query: searchQuery,
-        mod: selectedMod,
-        file: selectedFile,
-    }))
 
     const mData = await readModList();
 
@@ -150,7 +145,7 @@ exports.handler = async function (argv) {
 
 
 
-    // TODO add to modlist.json
+    // TODO add to cfd_mod_config.json
 
 
 }

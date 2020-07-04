@@ -5,6 +5,9 @@ module.exports = function () {
     const modListPath = path.join(process.cwd(), 'cfd_mod_config.json');
     return fs.existsSync(modListPath) ? JSON.parse(fs.readFileSync(
         modListPath
-    )).modList : {};
+    )) : {
+            server: null,
+            modList: {}
+        };
 }
 

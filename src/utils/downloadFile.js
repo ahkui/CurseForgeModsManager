@@ -1,12 +1,12 @@
-const axios = require('axios');
-const FileDownload = require('js-file-download');
+const fs = require('fs');
+const request = require('request');
 
+const download = ({ url, store }) => {
+    return new Promise(resolve => {
+        request({ url: url })
+            .pipe(fs.createWriteStream(store))
+            .on('close', resolve);
+    })
+};
 
-
-module.exports = function (link, path) {
-    return axios.get(link)
-        .then((response) => {
-            FileDownload(response.data, path);
-            return response
-        });
-}
+module.exports = download

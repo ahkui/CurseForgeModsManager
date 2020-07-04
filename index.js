@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+var join = require('path').join;
 
 Object.defineProperty(Array.prototype, 'chunk', {
     value: function (chunkSize) {
@@ -13,7 +14,7 @@ Object.defineProperty(Array.prototype, 'chunk', {
 
 const argv = require('yargs')
     .usage('Usage: $0 <command> [options]')
-    .commandDir('src')
+    .commandDir(join(__dirname, 'src'))
     .demandCommand()
     .help('h')
     .alias('h', 'help').argv

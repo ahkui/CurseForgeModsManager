@@ -15,16 +15,14 @@ exports.builder = function (yargs) {
         .help('h');
 }
 
-exports.handler = async function (argv) {
+
+async function show() {
     console.log('Fetching data from CurseForge...');
     const modList = readModList();
 
     let latestCount = 0;
     let totalCount = 0;
 
-    const structDatas = [
-
-    ];
 
 
     const progressBar = new cliProgress.SingleBar({
@@ -36,26 +34,37 @@ exports.handler = async function (argv) {
 
     progressBar.start(Object.keys(modList).length, 0);
 
+    let promiseList = []
+    let printResult = {}
+
     for (const key in modList) {
-        if (modList.hasOwnProperty(key)) {
-            const mod = modList[key];
-            if (mod.enable) {
+        const run = async () => {
+            if (modList.hasOwnProperty(key)) {
+                const mod = modList[key];
                 const result = await checkIsLatest({
                     modId: mod.mod_id,
                     currentFileId: mod.file_id
                 });
-                structDatas.push({ 'Mod': mod.name, 'Latest': result })
+
+                printResult[key] = { 'Mod': mod.name, 'Latest(CurseForge)': result, 'Enable': mod.enable }
+
                 if (result)
                     latestCount += 1;
                 totalCount += 1;
             }
+            progressBar.increment();
         }
-        progressBar.increment();
+        promiseList.push(run())
     }
 
+    await Promise.all(promiseList)
+
     progressBar.stop();
-    console.table(structDatas);
+    console.table(Object.keys(modList).map(key => printResult[key]));
 
 
     console.log('Status:', `${latestCount}/${totalCount}`)
 }
+
+exports.handler = show
+module.exports.show = show

@@ -1,24 +1,24 @@
 ## Install
 
-`npm i -g curseforge-downloader`
+`npm i -g curseforge-mods-manager`
 
 
 
 ## Usage
 ### Show installed mod
-`cfd show`
+`cmm show`
 
 ### Add a new mod
-`cfd add`
+`cmm add`
 
 ### Update exist mods
-`cfd update`
+`cmm update`
 
 ### Sync with server modlist
-`cfd sync`
+`cmm sync`
 
 ### Sync with specify server modlist
-`cfd sync --server https://example.com/cfd_mod_config.json`
+`cmm sync --server https://example.com/cmm_config.json`
 
 ### Download all mods
-`cfd fetch`
+`cmm fetch`

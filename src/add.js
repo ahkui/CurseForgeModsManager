@@ -141,11 +141,4 @@ exports.handler = async function (argv) {
     console.clear()
     console.log(`Your mods: ${Object.keys(mData).map((k) => mData[k].name).join(', ')}`)
     console.log('Done!')
-
-
-
-
-    // TODO add to cfd_mod_config.json
-
-
 }

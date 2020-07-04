@@ -115,5 +115,5 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-cfd_mod_config.json
+cmm_config.json
 **/*.jar

@@ -18,8 +18,8 @@ exports.builder = function (yargs) {
             type: 'string',
             description: 'Mod list URL'
         })
-        .example('cfd sync')
-        .example('cfd sync --server https://example.com/cfd_mod_config.json', 'Specify modlist')
+        .example('cmm sync')
+        .example('cmm sync --server https://example.com/cmm_config.json', 'Specify modlist')
         .help('h');
 }
 

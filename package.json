@@ -1,15 +1,16 @@
 {
-  "name": "curseforge-downloader",
+  "name": "curseforge-mods-manager",
   "version": "1.0.0",
-  "description": "Minecraft Mod manager",
+  "description": "Minecraft CurseForge Mod manager",
   "bin": {
-    "cfd": "index.js"
+    "cmm": "index.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "homepage": "https://github.com/ahkui/CurseForgeModsManager#readme",
   "author": "JoonKui Liew <ahkui@outlok.com>",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "@supercharge/promise-pool": "^1.2.0",
     "cli-progress": "^3.8.2",

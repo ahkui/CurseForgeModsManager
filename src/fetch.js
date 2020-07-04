@@ -21,7 +21,7 @@ exports.builder = function (yargs) {
         .help('h');
 }
 
-exports.handler = async function (argv) {
+const fetch = async function (argv) {
 
     const config = readModConfig()
     const { modList } = config
@@ -74,3 +74,7 @@ exports.handler = async function (argv) {
 
     progressBar.stop()
 }
+
+exports.handler = fetch
+
+module.exports.fetch = fetch

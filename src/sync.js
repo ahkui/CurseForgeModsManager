@@ -6,6 +6,7 @@ const writeModList = require('./utils/writeModList');
 const isSameModItem = require('./utils/isSameModItem');
 const request = require('request');
 const writeModConfig = require('./utils/writeModConfig');
+const { fetch } = require('./fetch');
 
 exports.command = 'sync';
 
@@ -18,7 +19,11 @@ exports.builder = function (yargs) {
             type: 'string',
             description: 'Mod list URL'
         })
-        .example('cmm sync')
+        .option('fetch', {
+            alias: 'f',
+            type: 'boolean',
+            description: 'Fetch mods'
+        }).example('cmm sync')
         .example('cmm sync --server https://example.com/cmm_config.json', 'Specify modlist')
         .help('h');
 }
@@ -87,8 +92,13 @@ exports.handler = async function (argv) {
     }
 
     await writeModList(localModList)
+    if (argv.fetch == true) {
+        await fetch();
+    } else {
 
-    // console.clear()
-    console.log(`Your mods: ${Object.keys(localModList).map((k) => localModList[k].name).join(', ')}`)
-    console.log('Done!')
+        // console.clear()
+        console.log(`Your mods: ${Object.keys(localModList).map((k) => localModList[k].name).join(', ')}`)
+        console.log('Done!')
+
+    }
 }

@@ -55,6 +55,11 @@ exports.handler = async function (argv) {
 
                 if (fs.existsSync(path.join(modPath, mod.filename)))
                     fs.renameSync(path.join(modPath, mod.filename), path.join(modPath, `${mod.filename}.disabled`));
+
+                return downloadFile({
+                    url: mod.file_url,
+                    store: path.join(modPath, `${mod.filename}.disabled`)
+                }).then(_ => progressBar.increment())
             }
             progressBar.increment()
             return

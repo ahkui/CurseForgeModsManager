@@ -1,5 +1,5 @@
 {
-  "name": "curseforge-mods-manager",
+  "name": "@ahkui/curseforge-mods-manager",
   "version": "1.0.0",
   "description": "Minecraft CurseForge Mod manager",
   "bin": {
@@ -18,5 +18,25 @@
     "mc-curseforge-api": "^2.1.0",
     "request": "^2.88.2",
     "yargs": "^15.4.0"
-  }
+  },
+  "main": "index.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ahkui/CurseForgeModsManager.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ahkui/CurseForgeModsManager/issues"
+  },
+  "keywords": [
+    "forge",
+    "fabric",
+    "curseforge",
+    "mc",
+    "mod",
+    "mods",
+    "mc-mod",
+    "mc-mods",
+    "minecraft"
+  ]
 }

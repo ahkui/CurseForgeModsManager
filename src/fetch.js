@@ -44,11 +44,18 @@ exports.handler = async function (argv) {
         .for(Object.keys(modList))
         .process(async key => {
             const mod = modList[key]
-            if (mod.enable == true)
+            if (mod.enable == true) {
+                if (fs.existsSync(modPath) == false)
+                    fs.mkdirSync(modPath);
+
+                if (fs.existsSync(path.join(modPath, `${mod.filename}.disabled`)))
+                    fs.renameSync(path.join(modPath, `${mod.filename}.disabled`), path.join(modPath, mod.filename));
+
                 return downloadFile({
                     url: mod.file_url,
                     store: path.join(modPath, mod.filename)
                 }).then(_ => progressBar.increment())
+            }
             else if (mod.enable == false) {
                 if (fs.existsSync(modPath) == false)
                     fs.mkdirSync(modPath);

@@ -46,7 +46,7 @@ async function show() {
                     currentFileId: mod.file_id
                 });
 
-                printResult[key] = { 'Mod': mod.name, 'Latest(CurseForge)': result, 'Enable': mod.enable }
+                printResult[key] = { 'Mod': mod.name, 'HomePage': mod.mod_url, 'Latest(CurseForge)': result, 'Enable': mod.enable }
 
                 if (result)
                     latestCount += 1;

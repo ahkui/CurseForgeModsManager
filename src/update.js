@@ -19,14 +19,14 @@ exports.builder = function (yargs) {
 }
 
 exports.handler = async function (argv) {
-    // await show();
+    await show();
 
     const localModList = (await readModList());
     const mods = Object.keys(localModList).map(key => {
         const mod = localModList[key];
         mod.key = key;
         return mod
-    }).chunk(10)
+    })
 
     let currentPage = 0;
     let selectIndex = ''
@@ -34,37 +34,15 @@ exports.handler = async function (argv) {
     // Select Mod
     while (true) {
         selectIndex = ''
-        while (selectIndex == '' || selectIndex < 0 || selectIndex > 9 || selectIndex >= mods[currentPage].length) {
-
-            console.clear()
-
-            await Promise.all(mods[currentPage].map(m => {
-                return checkIsLatest({ modId: m.mod_id, currentFileId: m.file_id }).then(isLatest => m.isLatest = isLatest)
-            }))
-
-            let outputData = parsedModList(mods[currentPage])
-            console.table(outputData)
-            console.log(`Page: ${currentPage + 1}/${mods.length} (Tips: \`b\` prev page, \`n\` next page)`);
-
+        while (selectIndex == '' || selectIndex < 0 || selectIndex >= mods.length)
             selectIndex = await ask("Select mod(index): ");
-        }
 
-        if (selectIndex == 'b') {
-            if (currentPage > 0)
-                currentPage -= 1;
-            continue
-        } else if (selectIndex == 'n') {
-            console.log(currentPage < mods.length, currentPage, mods.length)
-            if (currentPage < mods.length - 1)
-                currentPage += 1;
-            continue
-        }
-        if (mods[currentPage][selectIndex] == undefined)
+        if (mods[selectIndex] == undefined)
             continue
         break
     }
 
-    const selectedMod = mods[currentPage][selectIndex]
+    const selectedMod = mods[selectIndex]
 
     const files = (await curseforge.getModFiles(selectedMod.mod_id)).sort((a, b) => {
         const left = new Date(b.timestamp);

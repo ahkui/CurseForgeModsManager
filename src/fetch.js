@@ -44,25 +44,23 @@ const fetch = async function (argv) {
         .for(Object.keys(modList))
         .process(async key => {
             const mod = modList[key]
+
+            if (fs.existsSync(modPath) == false)
+                fs.mkdirSync(modPath);
+
+            if (fs.existsSync(path.join(modPath, `${mod.filename}.disabled`)))
+                fs.unlinkSync(path.join(modPath, `${mod.filename}.disabled`));
+
+            if (fs.existsSync(path.join(modPath, mod.filename)))
+                fs.unlinkSync(path.join(modPath, mod.filename));
+
             if (mod.enable == true) {
-                if (fs.existsSync(modPath) == false)
-                    fs.mkdirSync(modPath);
-
-                if (fs.existsSync(path.join(modPath, `${mod.filename}.disabled`)))
-                    fs.renameSync(path.join(modPath, `${mod.filename}.disabled`), path.join(modPath, mod.filename));
-
                 return downloadFile({
                     url: mod.file_url,
                     store: path.join(modPath, mod.filename)
                 }).then(_ => progressBar.increment())
             }
             else if (mod.enable == false) {
-                if (fs.existsSync(modPath) == false)
-                    fs.mkdirSync(modPath);
-
-                if (fs.existsSync(path.join(modPath, mod.filename)))
-                    fs.renameSync(path.join(modPath, mod.filename), path.join(modPath, `${mod.filename}.disabled`));
-
                 return downloadFile({
                     url: mod.file_url,
                     store: path.join(modPath, `${mod.filename}.disabled`)

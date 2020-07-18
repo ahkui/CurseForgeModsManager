@@ -42,6 +42,7 @@ const fetch = async function (argv) {
 
     await PromisePool
         .for(Object.keys(modList))
+        .withConcurrency(8)
         .process(async key => {
             const mod = modList[key]
 

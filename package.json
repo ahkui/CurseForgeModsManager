@@ -1,6 +1,6 @@
 {
   "name": "@ahkui/curseforge-mods-manager",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "Minecraft CurseForge Mod manager",
   "bin": {
     "cmm": "index.js"
